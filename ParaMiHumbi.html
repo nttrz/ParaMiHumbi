@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Para ti 🤍</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Special+Elite&display=swap" rel="stylesheet">
+
+<style>
+body {
+    background: #f7f4f2;
+    font-family: 'Special Elite', cursive;
+    margin: 0;
+    padding: 16px;
+    color: #2e2e2e;
+    display: flex;
+    justify-content: center;
+}
+
+.chat {
+    max-width: 420px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.bubble {
+    padding: 14px 16px;
+    border-radius: 18px;
+    margin-bottom: 12px;
+    line-height: 1.7;
+    font-size: 0.95rem;
+    width: fit-content;
+    max-width: 90%;
+}
+
+.from-her {
+    background: #efe3ea;
+    align-self: flex-start;
+}
+
+.from-him {
+    background: #e0e0e0;
+    align-self: flex-end;
+}
+
+.options {
+    margin-top: 16px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    width: 100%;
+    justify-items: center;
+}
+
+button {
+    padding: 12px;
+    border-radius: 14px;
+    border: none;
+    font-family: 'Special Elite', cursive;
+    font-size: 0.85rem;
+    background: #e6dcd6;
+    cursor: pointer;
+    width: 100%;
+    max-width: 180px;
+}
+
+button:hover {
+    background: #dccfc7;
+}
+</style>
+</head>
+
+<body>
+
+<div class="chat" id="chat"></div>
+
+<script>
+const chat = document.getElementById("chat");
+
+function addBubble(text, who) {
+    const bubble = document.createElement("div");
+    bubble.className = "bubble " + who;
+    bubble.innerText = text;
+    chat.appendChild(bubble);
+    window.scrollTo(0, document.body.scrollHeight);
+}
+
+function showOptions() {
+    const options = document.createElement("div");
+    options.className = "options";
+    options.id = "options";
+
+    options.innerHTML = `
+        <button onclick="selectOption('bien')">Bien</button>
+        <button onclick="selectOption('mal')">Mal</button>
+        <button onclick="showCansadoOptions()">Cansado</button>
+        <button onclick="showTristeOptions()">Triste</button>
+        <button onclick="selectOption('confundido')">Confundido</button>
+    `;
+
+    chat.appendChild(options);
+}
+
+function showCansadoOptions() {
+    document.getElementById("options").remove();
+
+    const options = document.createElement("div");
+    options.className = "options";
+    options.id = "options";
+
+    options.innerHTML = `
+        <button onclick="selectOption('cansadoFisico')">Cansado físicamente</button>
+        <button onclick="selectOption('cansadoEmocional')">Cansado emocionalmente</button>
+        <button onclick="selectOption('cansadoAmbos')">Ambos</button>
+    `;
+
+    chat.appendChild(options);
+}
+
+function showTristeOptions() {
+    document.getElementById("options").remove();
+
+    addBubble("¿Qué te ayudaría más ahora?", "from-her");
+
+    const options = document.createElement("div");
+    options.className = "options";
+    options.id = "options";
+
+    options.innerHTML = `
+        <button onclick="selectOption('abrazo')">Quiero un abrazo</button>
+        <button onclick="selectOption('bonito')">Solo quiero leer algo bonito</button>
+    `;
+
+    chat.appendChild(options);
+}
+
+function startChat() {
+    chat.innerHTML = "";
+
+    addBubble("Para ti, mi amado Humberto 🤍", "from-her");
+    addBubble(
+        "He estado trabajando en esto para ti, una forma más en la que quiero estar para ti incluso si físicamente no puedo responderte o estar contigo.",
+        "from-her"
+    );
+    addBubble("¿Cómo te sientes hoy?", "from-her");
+
+    showOptions();
+}
+
+function addRestartButton() {
+    const restart = document.createElement("button");
+    restart.innerText = "Volver a empezar";
+    restart.onclick = startChat;
+    restart.style.marginTop = "16px";
+    chat.appendChild(restart);
+}
+
+function selectOption(option) {
+    document.getElementById("options").remove();
+
+    let userText = "";
+    let replyText = "";
+
+    // Opciones normales
+    if (option === "bien") {
+        userText = "Bien";
+        replyText = "¡Me alegro que estés bien! Vas muy bien, sigue así. Estoy muy orgullosa de ti. También es bueno que reconozcas tus logros y los disfrutes. Te amo 🤍\n\n— Nat Kun";
+    }
+
+    if (option === "mal") {
+        userText = "Mal";
+        replyText = "No estás solo. Estoy para ti, aquí sigo y aquí estaré. Recuerda quien eres y lo capaz que eres de muchas cosas, no te rindas, sigue adelante, todos estamos muy orgullosos de ti. Te amo mucho ❤️‍🩹\n\n— Nat Kun";
+    }
+
+    if (option === "confundido") {
+        userText = "Confundido";
+        replyText = "No tienes que entender todo hoy. Respira. Todo se acomodará. Te amo 🤍\n\n— Nat Kun";
+    }
+
+    // Opciones de cansado
+    if (option === "cansadoFisico") {
+        userText = "Cansado físicamente";
+        replyText =
+        "Es completamente entendible, te esfuerzas mucho todos los días.\nPor favor no olvides dedicar tiempo a comer, descansar\ne incluso a echar la flojera cuando puedas.\nCuando te cuidas, te sientes mejor\ny también puedes dar lo mejor de ti.\nTe abrazo y deseo que recuperes pronto todas tus fuerzas. Te amo. 🤍\n— Nat Kun";
+    }
+
+    if (option === "cansadoEmocional") {
+        userText = "Cansado emocionalmente";
+        replyText =
+        "A veces la mente es la que más se cansa\ny la que menos oportunidad tiene de descansar.\nRespira hondo,\nsuelta lo que no está en tus manos,\nporque lo que sí está, ya lo estás haciendo.\nSolo es cuestión de esperar.\nTe amo 🤍\n— Nat Kun";
+    }
+
+    if (option === "cansadoAmbos") {
+        userText = "Ambos";
+        replyText =
+        "Cuando todo se acumula,\na veces es difícil mantenerse positivo\no ver lo bueno que ya viene. No te angusties,\ntodo pasa,\nnada malo es eterno. Come algo rico, relájate,\njuega Warzone o ve alguna película.\nCuídate y consiéntete cada que puedas,\ntú también debes ser tu prioridad. Te amo 🤍\nAquí estoy y no me voy.\n— Nat Kun";
+    }
+
+    // Opciones de Triste
+    if (option === "abrazo") {
+        userText = "Quiero un abrazo";
+        replyText = `Tal vez no pueda abrazarte físicamente,
+pero mi corazón siempre está contigo
+y te abrazo constantemente:
+mañana, tarde y noche.
+
+No hay momento en el que no te piense.
+Te abrazo cuando te pienso,
+cuando escucho música que sé que te gusta,
+cuando te mando mensajes,
+cuando abrazo a Salem.
+
+Siempre te abrazo,
+aunque sea a la distancia.
+
+Te amo 💕 
+
+— Nat Kun 🤍`;
+    }
+
+    if (option === "bonito") {
+        userText = "Solo quiero leer algo bonito";
+        replyText = `Aunque ahora todo se vea gris y desesperanzador,
+no es así.
+
+Hay muchas personas que te amamos,
+que estamos orgullosos de lo que ya has logrado
+y que mandamos pensamientos positivos hacia donde estés,
+aunque estemos a 4,774 km de distancia
+(sí, puedes googlearlo).
+
+No pierdas la esperanza,
+no te rindas.
+
+El mundo entero te está esperando
+y es un mejor lugar porque tú estás en él.
+
+Te amo enormemente 💞
+
+— Nat Kun 🤍`;
+    }
+
+    addBubble(userText, "from-him");
+    setTimeout(() => {
+        addBubble(replyText, "from-her");
+        addRestartButton();
+    }, 600);
+}
+
+// Iniciar chat
+startChat();
+</script>
+
+</body>
+</html>
